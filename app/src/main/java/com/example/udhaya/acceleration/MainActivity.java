@@ -5,15 +5,16 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Chronometer;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.nio.BufferUnderflowException;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 @SuppressWarnings("ConstantConditions")
 
@@ -23,13 +24,18 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private static final String TAG = "MainActivity";
 
     private SensorManager sensorManager;
-    Sensor accelerometer,mGyro,mMagno;
-    private String xAcc, yAcc,zAcc, xAcc2, yAcc2, zAcc2;
+    Sensor accelerometer,mGyro;
+    public Float xAcc, yAcc,zAcc, xAcc2, yAcc2, zAcc2;
     private double dist;
-    private double x,y,z;
+    private double x,y,z,final_dist;
+    private float fb,td,s;
+    private Chronometer chronometer;
+    private boolean running;
+    private long stopoffset;
 
-    TextView xValue, yValue, zValue,xGyroValue, yGyroValue, zGyroValue,xMagnoValue, yMagnoValue, zMagnoValue, dist1;
-    Button start,stop,calc;
+
+    TextView xValue, yValue, zValue,xGyroValue, yGyroValue, zGyroValue, dist1, CounterText;
+    Button start,stop,calc,reset;
 
 
     @Override
@@ -37,17 +43,19 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        xValue = (TextView) findViewById(R.id.xValue);
-        yValue = (TextView) findViewById(R.id.yValue);
-        zValue = (TextView) findViewById(R.id.zValue);
+        chronometer = findViewById(R.id.chronometer);
+        chronometer.setFormat("%s");
+        chronometer.setBase(SystemClock.elapsedRealtime());
+
+        xValue = (TextView) findViewById(R.id.txtxValue);
+        yValue = (TextView) findViewById(R.id.txtyValue);
+        zValue = (TextView) findViewById(R.id.txtzValue);
+        CounterText = (TextView) findViewById(R.id.mTextField);
+
 
         xGyroValue = (TextView) findViewById(R.id.xGyroValue);
         yGyroValue = (TextView) findViewById(R.id.yGyroValue);
         zGyroValue = (TextView) findViewById(R.id.zGyroValue);
-
-        xMagnoValue = (TextView) findViewById(R.id.xMagnoValue);
-        yMagnoValue = (TextView) findViewById(R.id.yMagnoValue);
-        zMagnoValue = (TextView) findViewById(R.id.zMagnoValue);
 
         dist1 = (TextView) findViewById(R.id.tvdist) ;
 
@@ -55,15 +63,23 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
        Button start = findViewById(R.id.btStart);
        Button stop = findViewById(R.id.btStop);
        Button calc = findViewById(R.id.btcalc);
+        Button reset = findViewById(R.id.reset);
 
 
         start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                xAcc = xValue.getText().toString();
-                yAcc = yValue.getText().toString();
 
-//                zAcc = xValue.getText().toString();
+                xAcc = fb;
+                yAcc = td;
+                zAcc = s;
+                if(!running){
+                    chronometer.setBase(SystemClock.elapsedRealtime() - stopoffset);
+                    chronometer.start();
+                    running = true;
+                }
+
+
             }
         });
 
@@ -72,9 +88,15 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         stop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                xAcc2 = xValue.getText().toString();
-                yAcc2 = yValue.getText().toString();
-//                zAcc2 = xValue.getText().toString();
+                xAcc2 = fb;
+                yAcc2 = td;
+                zAcc2 = s;
+
+                if(running){
+                    chronometer.stop();
+                    stopoffset = SystemClock.elapsedRealtime() - chronometer.getBase();
+                    running = false;
+                }
             }
         });
 
@@ -82,17 +104,23 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
        calc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//              dist = Math.sqrt((Float.valueOf(xAcc)-Float.valueOf(xAcc2))*(Float.valueOf(xAcc)-Float.valueOf(xAcc2))+(Float.valueOf(yAcc)-Float.valueOf(yAcc2))*(Float.valueOf(yAcc)-Float.valueOf(yAcc2)));
-             x = Math.pow((Float.valueOf(xAcc)-Float.valueOf(xAcc2)),2);
-             y = Math.pow((Float.valueOf(yAcc)-Float.valueOf(yAcc2)),2);
-             z = x + y;
-             dist = Math.sqrt(z);
-             Toast.makeText(MainActivity.this,""+ x,Toast.LENGTH_LONG).show();
-//                Toast.makeText(MainActivity.this,""+ yAcc,Toast.LENGTH_LONG).show();
-//                Toast.makeText(MainActivity.this,""+ xAcc2,Toast.LENGTH_LONG).show();
-//                Toast.makeText(MainActivity.this,""+ yAcc2,Toast.LENGTH_LONG).show();
+                x = Math.pow((xAcc-xAcc2),2);
+                y = Math.pow((yAcc-yAcc2),2);
+                z = Math.pow((zAcc-zAcc2),2);
+                final_dist = Math.sqrt(x + y+ z);
+                dist1.setText(""+final_dist);
             }
         });
+
+       reset.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+               chronometer.setBase(SystemClock.elapsedRealtime());
+               stopoffset = 0;
+           }
+       });
+
+
 
         Log.d(TAG, "onCreate: Initializing Sensor Services");
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
@@ -107,6 +135,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             zValue.setText("Accelerometer not Supported");
         }
 
+
+
         mGyro = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
         if(mGyro != null) {
             sensorManager.registerListener(MainActivity.this, mGyro, SensorManager.SENSOR_DELAY_NORMAL);
@@ -117,16 +147,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             zGyroValue.setText("Gyroscope not Supported");
         }
 
-        mMagno = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
-        if(mMagno != null) {
-            sensorManager.registerListener(MainActivity.this, mMagno, SensorManager.SENSOR_DELAY_NORMAL);
-            Log.d(TAG, "onCreate: Registered Magno listener");
-        }else{
-            xMagnoValue.setText("Magno not Supported");
-            yMagnoValue.setText("Magno not Supported");
-            zMagnoValue.setText("Magno not Supported");
-        }
     }
+
+
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
@@ -140,17 +163,17 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         if(sensor.getType() == Sensor.TYPE_LINEAR_ACCELERATION) {
             Log.d(TAG, "onSensorChanged: X: " + sensorEvent.values[0] + " Y: " + sensorEvent.values[1] + " Z :" + sensorEvent.values[2]);
 
-            xValue.setText("xValue" + sensorEvent.values[0]);
-            yValue.setText("yValue" + sensorEvent.values[1]);
-            zValue.setText("zValue" + sensorEvent.values[2]);
-        }else if(sensor.getType() == Sensor.TYPE_GYROSCOPE){
-            xGyroValue.setText("xGyroValue" + sensorEvent.values[0]);
-            yGyroValue.setText("yGyroValue" + sensorEvent.values[1]);
-            zGyroValue.setText("zGyroValue" + sensorEvent.values[2]);
-        } else if(sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD){
-            xMagnoValue.setText("xMagnoValue" + sensorEvent.values[0]);
-            yMagnoValue.setText("yMagnoValue" + sensorEvent.values[1]);
-            zMagnoValue.setText("zMAgnoValue" + sensorEvent.values[2]);
+           xValue.setText("Front and Back Movement:    " + sensorEvent.values[0]);
+           fb = sensorEvent.values[0];
+            yValue.setText("Top and Down Movement:      " + sensorEvent.values[1]);
+            td = sensorEvent.values[1];
+            zValue.setText("Slope Movement:             " + sensorEvent.values[2]);
+            s = sensorEvent.values[2];
+        }
+        else if(sensor.getType() == Sensor.TYPE_GYROSCOPE){
+            xGyroValue.setText("X - Axis         " + sensorEvent.values[0]);
+            yGyroValue.setText("Y - Axis         " + sensorEvent.values[1]);
+            zGyroValue.setText("Z - Axis         " + sensorEvent.values[2]);
         }
     }
 

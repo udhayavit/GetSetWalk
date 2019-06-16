@@ -1,92 +1,242 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="30sp"
+    android:background="@drawable/bbb"
     tools:context="com.example.udhaya.acceleration.MainActivity">
 
 
+ <TextView
+     android:id="@+id/txtxValue"
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content"
+     android:layout_marginBottom="8dp"
+     android:layout_marginEnd="8dp"
+     android:layout_marginStart="8dp"
+     android:layout_marginTop="8dp"
+     app:layout_constraintBottom_toBottomOf="parent"
+     app:layout_constraintEnd_toEndOf="parent"
+     app:layout_constraintHorizontal_bias="0.681"
+     app:layout_constraintStart_toStartOf="parent"
+     app:layout_constraintTop_toTopOf="parent"
+     app:layout_constraintVertical_bias="0.08" />
 
+ <TextView
+     android:id="@+id/txtyValue"
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content"
+     android:layout_marginBottom="8dp"
+     android:layout_marginEnd="8dp"
+     android:layout_marginStart="8dp"
+     android:layout_marginTop="8dp"
+     app:layout_constraintBottom_toBottomOf="parent"
+     app:layout_constraintEnd_toEndOf="parent"
+     app:layout_constraintHorizontal_bias="0.681"
+     app:layout_constraintStart_toStartOf="parent"
+     app:layout_constraintTop_toTopOf="parent"
+     app:layout_constraintVertical_bias="0.133" />
 
-   <TextView
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:id="@+id/xValue" />
+ <TextView
+     android:id="@+id/txtzValue"
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content"
+     android:layout_marginBottom="8dp"
+     android:layout_marginEnd="8dp"
+     android:layout_marginStart="8dp"
+     android:layout_marginTop="8dp"
+     app:layout_constraintBottom_toBottomOf="parent"
+     app:layout_constraintEnd_toEndOf="parent"
+     app:layout_constraintHorizontal_bias="0.681"
+     app:layout_constraintStart_toStartOf="parent"
+     app:layout_constraintTop_toTopOf="parent"
+     app:layout_constraintVertical_bias="0.186" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/yValue"
-        android:layout_marginTop="30sp" />
+ <TextView
+     android:id="@+id/xGyroValue"
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content"
+     android:layout_marginBottom="8dp"
+     android:layout_marginEnd="8dp"
+     android:layout_marginStart="8dp"
+     android:layout_marginTop="8dp"
+     app:layout_constraintBottom_toBottomOf="parent"
+     app:layout_constraintEnd_toEndOf="parent"
+     app:layout_constraintHorizontal_bias="0.681"
+     app:layout_constraintStart_toStartOf="parent"
+     app:layout_constraintTop_toTopOf="parent"
+     app:layout_constraintVertical_bias="0.294" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/zValue"
-        android:layout_marginTop="30sp" />
+ <TextView
+     android:id="@+id/yGyroValue"
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content"
+     android:layout_marginBottom="8dp"
+     android:layout_marginEnd="8dp"
+     android:layout_marginStart="8dp"
+     android:layout_marginTop="8dp"
+     app:layout_constraintBottom_toBottomOf="parent"
+     app:layout_constraintEnd_toEndOf="parent"
+     app:layout_constraintHorizontal_bias="0.681"
+     app:layout_constraintStart_toStartOf="parent"
+     app:layout_constraintTop_toTopOf="parent"
+     app:layout_constraintVertical_bias="0.345" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/xGyroValue" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/yGyroValue"
-        android:layout_marginTop="30sp" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/zGyroValue"
-        android:layout_marginTop="30sp" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/xMagnoValue" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/yMagnoValue"
-        android:layout_marginTop="30sp" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/zMagnoValue"
-        android:layout_marginTop="30sp" />
+ <TextView
+     android:id="@+id/zGyroValue"
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content"
+     android:layout_marginBottom="8dp"
+     android:layout_marginEnd="8dp"
+     android:layout_marginStart="8dp"
+     android:layout_marginTop="8dp"
+     app:layout_constraintBottom_toBottomOf="parent"
+     app:layout_constraintEnd_toEndOf="parent"
+     app:layout_constraintHorizontal_bias="0.681"
+     app:layout_constraintStart_toStartOf="parent"
+     app:layout_constraintTop_toTopOf="parent"
+     app:layout_constraintVertical_bias="0.411" />
 
  <Button
-     android:layout_width="wrap_content"
-     android:layout_height="wrap_content"
      android:id="@+id/btStart"
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     android:layout_marginBottom="8dp"
+     android:layout_marginEnd="8dp"
+     android:layout_marginStart="8dp"
+     android:layout_marginTop="8dp"
      android:text="START"
-     />
+     app:layout_constraintBottom_toBottomOf="parent"
+     app:layout_constraintEnd_toEndOf="parent"
+     app:layout_constraintHorizontal_bias="0.129"
+     app:layout_constraintStart_toStartOf="parent"
+     app:layout_constraintTop_toTopOf="parent"
+     app:layout_constraintVertical_bias="0.529" />
 
 
  <Button
+     android:id="@+id/btStop"
      android:layout_width="wrap_content"
      android:layout_height="wrap_content"
-     android:id="@+id/btStop"
+     android:layout_marginBottom="8dp"
+     android:layout_marginEnd="8dp"
+     android:layout_marginStart="8dp"
+     android:layout_marginTop="8dp"
      android:text="STOP"
-     />
+     app:layout_constraintBottom_toBottomOf="parent"
+     app:layout_constraintEnd_toEndOf="parent"
+     app:layout_constraintHorizontal_bias="0.87"
+     app:layout_constraintStart_toStartOf="parent"
+     app:layout_constraintTop_toTopOf="parent"
+     app:layout_constraintVertical_bias="0.526" />
 
  <Button
      android:id="@+id/btcalc"
      android:layout_width="wrap_content"
      android:layout_height="wrap_content"
-     android:text="CALCULATE" />
+     android:layout_marginBottom="8dp"
+     android:layout_marginEnd="8dp"
+     android:layout_marginStart="8dp"
+     android:layout_marginTop="8dp"
+     android:text="CALCULATE"
+     app:layout_constraintBottom_toBottomOf="parent"
+     app:layout_constraintEnd_toEndOf="parent"
+     app:layout_constraintStart_toStartOf="parent"
+     app:layout_constraintTop_toTopOf="parent"
+     app:layout_constraintVertical_bias="0.69" />
 
  <TextView
+     android:id="@+id/tvdist"
      android:layout_width="match_parent"
      android:layout_height="wrap_content"
-     android:id="@+id/tvdist" />
+     android:layout_marginBottom="8dp"
+     android:layout_marginEnd="8dp"
+     android:layout_marginStart="8dp"
+     android:layout_marginTop="8dp"
+     app:layout_constraintBottom_toBottomOf="parent"
+     app:layout_constraintEnd_toEndOf="parent"
+     app:layout_constraintHorizontal_bias="0.681"
+     app:layout_constraintStart_toStartOf="parent"
+     app:layout_constraintTop_toTopOf="parent"
+     app:layout_constraintVertical_bias="0.796" />
+
+ <TextView
+     android:id="@+id/mTextField"
+     android:layout_width="271dp"
+     android:layout_height="18dp"
+     android:layout_marginBottom="8dp"
+     android:layout_marginEnd="8dp"
+     android:layout_marginStart="8dp"
+     android:layout_marginTop="8dp"
+     app:layout_constraintBottom_toBottomOf="parent"
+     app:layout_constraintEnd_toEndOf="parent"
+     app:layout_constraintHorizontal_bias="0.281"
+     app:layout_constraintStart_toStartOf="parent"
+     app:layout_constraintTop_toTopOf="parent"
+     app:layout_constraintVertical_bias="0.884" />
+
+ <TextView
+     android:id="@+id/textView2"
+     android:layout_width="257dp"
+     android:layout_height="18dp"
+     android:layout_marginBottom="8dp"
+     android:layout_marginStart="16dp"
+     android:layout_marginTop="8dp"
+     android:text="GYROSCOPE VALUES"
+     app:layout_constraintBottom_toBottomOf="parent"
+     app:layout_constraintStart_toStartOf="parent"
+     app:layout_constraintTop_toTopOf="parent"
+     app:layout_constraintVertical_bias="0.241" />
+
+ <TextView
+     android:id="@+id/textView3"
+     android:layout_width="261dp"
+     android:layout_height="18dp"
+     android:layout_marginBottom="8dp"
+     android:layout_marginEnd="8dp"
+     android:layout_marginStart="8dp"
+     android:layout_marginTop="8dp"
+     android:text="ACCELEROMETER VALUES"
+     app:layout_constraintBottom_toBottomOf="parent"
+     app:layout_constraintEnd_toEndOf="parent"
+     app:layout_constraintHorizontal_bias="0.015"
+     app:layout_constraintStart_toStartOf="parent"
+     app:layout_constraintTop_toTopOf="parent"
+     app:layout_constraintVertical_bias="0.027" />
+
+ <Chronometer
+     android:id="@+id/chronometer"
+     android:layout_width="67dp"
+     android:layout_height="77dp"
+     android:layout_marginBottom="8dp"
+     android:layout_marginEnd="8dp"
+     android:layout_marginStart="8dp"
+     android:layout_marginTop="8dp"
+     android:textSize="30sp"
+     app:layout_constraintBottom_toBottomOf="parent"
+     app:layout_constraintEnd_toEndOf="parent"
+     app:layout_constraintStart_toStartOf="parent"
+     app:layout_constraintTop_toTopOf="parent"
+     app:layout_constraintVertical_bias="0.549" />
+
+ <Button
+     android:id="@+id/reset"
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     android:layout_marginBottom="8dp"
+     android:layout_marginEnd="8dp"
+     android:layout_marginStart="8dp"
+     android:layout_marginTop="8dp"
+     android:text="RESET CLOCK"
+     app:layout_constraintBottom_toBottomOf="parent"
+     app:layout_constraintEnd_toEndOf="parent"
+     app:layout_constraintHorizontal_bias="0.96"
+     app:layout_constraintStart_toStartOf="parent"
+     app:layout_constraintTop_toTopOf="parent"
+     app:layout_constraintVertical_bias="0.974" />
 
 
-</LinearLayout>
+</android.support.constraint.ConstraintLayout>
